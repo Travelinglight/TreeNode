@@ -51,13 +51,14 @@ private:
 public:
 	// constructor and destructor
 	Node();
-	Node(T fill);
+	Node(T1 id);
 	Node(const Node<T1, T2> &New);
 	~Node();
 
 	// modify the info of private members
 	bool ModifyID(const T1 &tmp);
-	bool operator=(const T &cnt, bool init);
+	bool operator=(const Node<T1, T2> & const b);
+	bool copy(const Node<T1, T2> * const b);
 	bool AddLft(Node<T1, T2> *lft);
 	bool AddRgt(Node<T1, T2> *rgt);
 	bool AddLft(T1 lftID);
@@ -76,7 +77,7 @@ public:
 // DESCRIPTION: Constructor of Node class.
 //   ARGUMENTS: none
 // USES GLOBAL: none
-// MODIFIES GL: height, Lft, Rgt
+// MODIFIES GL: height, Rcd, Lft, Rgt
 //     RETURNS: none
 //      AUTHOR: Kingston Chan
 // AUTHOR/DATE: KC 2015-02-05
@@ -92,17 +93,17 @@ Node<T1, T2>::Node() {
 ////////////////////////////////////////////////////////////////////////////////
 //        NAME: Node
 // DESCRIPTION: Constructor of Node class.
-//   ARGUMENTS: T fill - the content of the node
+//   ARGUMENTS: T1 id - the ID of the node
 // USES GLOBAL: none
-// MODIFIES GL: content, height, Lft, Rgt
+// MODIFIES GL: ID, Rcd, height, Lft, Rgt
 //     RETURNS: none
 //      AUTHOR: Kingston Chan
 // AUTHOR/DATE: KC 2015-02-05
 //							KC 2015-02-05
 ////////////////////////////////////////////////////////////////////////////////
 template<class T1, class T2 = NULLT>
-Node<T1, T2>::Node(T1 fill) {
-	ID = fill;
+Node<T1, T2>::Node(T1 id) {
+	ID = id;
 	Rcd = new T2;
 	Lft = Rgt = NULL;	// no sons at first
 	height = 0;
@@ -111,9 +112,9 @@ Node<T1, T2>::Node(T1 fill) {
 ////////////////////////////////////////////////////////////////////////////////
 //        NAME: Node
 // DESCRIPTION: Copy constructor of Node class, copy the content only.
-//   ARGUMENTS: const Node<T> &New - the Node that is to be copied
+//   ARGUMENTS: const Node<T1, T2> &New - the Node that is to be copied
 // USES GLOBAL: none
-// MODIFIES GL: content, height, Lft, Rgt
+// MODIFIES GL: ID, Rcd, height, Lft, Rgt
 //     RETURNS: none
 //      AUTHOR: Kingston Chan
 // AUTHOR/DATE: KC 2015-02-05
@@ -121,12 +122,7 @@ Node<T1, T2>::Node(T1 fill) {
 ////////////////////////////////////////////////////////////////////////////////
 template<class T1, class T2 = NULLT>
 Node<T1, T2>::Node(const Node<T1, T2> &New) {
-	ID = New.ID;
-	Rcd = new T2;
-	Rcd = New.getRcd;
-	height = 0;
-	Lft = NULL;
-	Rgt = NULL;
+	copy(New);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -134,59 +130,119 @@ Node<T1, T2>::Node(const Node<T1, T2> &New) {
 // DESCRIPTION: Destructor of Node class.
 //   ARGUMENTS: none
 // USES GLOBAL: none
-// MODIFIES GL: content, height, Lft, Rgt
+// MODIFIES GL: ID, Rcd, height, Lft, Rgt
 //     RETURNS: none
 //      AUTHOR: Kingston Chan
 // AUTHOR/DATE: KC 2015-02-05
 //							KC 2015-02-05
 ////////////////////////////////////////////////////////////////////////////////
 template<class T1, class T2 = NULLT>
-Node<T>::~Node() {
-	if (Lft)
+Node<T1, T2>::~Node() {
+	if (Rcd != NULL)
+		delete Rcd;
+	if (Lft != NULL)
 		delete Lft;
-	if (Rgt)
+	if (Rgt != NULL)
 		delete Rgt;
-	//cout << "delete " << content << endl;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-//        NAME: ModifyContent
-// DESCRIPTION: To modify the content of a Node.
-//   ARGUMENTS: const T &tmp - the new content value
+//        NAME: ModifyID
+// DESCRIPTION: To modify the ID of a Node.
+//   ARGUMENTS: const T1 &tmp - the new ID value
 // USES GLOBAL: none
-// MODIFIES GL: content
+// MODIFIES GL: ID
 //     RETURNS: bool
 //      AUTHOR: Kingston Chan
 // AUTHOR/DATE: KC 2015-02-05
 //							KC 2015-02-05
 ////////////////////////////////////////////////////////////////////////////////
 template<class T1, class T2 = NULLT>
-bool Node<T>::ModifyContent(const T &tmp) {
-	content = tmp;
+bool Node<T1, T2>::ModifyID(const T1 &tmp) {
+	ID = tmp;
 	return true;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-//        NAME: operator=
-// DESCRIPTION: Assignment operation of the Node's content.
-//   ARGUMENTS: const T &cnt - the content that is to be assigned
+//        NAME: copy
+// DESCRIPTION: To copy the node and their sons.
+//   ARGUMENTS: const Node<T1, T2> * const b - the new node that is to be copied
 // USES GLOBAL: none
-// MODIFIES GL: content
+// MODIFIES GL: ID, Rcd, Lft, Rgt, height
 //     RETURNS: bool
 //      AUTHOR: Kingston Chan
 // AUTHOR/DATE: KC 2015-02-05
 //							KC 2015-02-05
 ////////////////////////////////////////////////////////////////////////////////
 template<class T1, class T2 = NULLT>
-bool Node<T>::operator=(const T &cnt) {
-	content = cnt;
+bool Node<T1, T2>::copy(const Node<T1, T2> * const b) {
+	
+	// avoid self copy after deletion
+	if (b == this)
+		return true;
+
+	// copy ID, record and height
+	ID = b->ID;
+	if (b->Rcd != NULL) {
+		if (Rcd == NULL)
+			Rcd = new T2;
+		*Rcd = *(b->Rcd);
+	}
+	else {
+		if (Rcd != NULL)
+			delete Rcd;
+	}
+	height = b->height;
+
+	// copy the left son
+	if (b->Lft != NULL) {
+		if (Lft == NULL)
+			Lft = new Node<T1, T2>;
+		Lft->copy(b->Lft);
+	}
+	else {
+		if (Lft != NULL)
+			delete Lft;
+	}
+
+	// copy the right son
+	if (b->Rgt != NULL) {
+		if (Rgt == NULL)
+			Rgt = new Node<T1, T2>;
+		Rgt->copy(b->Rgt);
+	}
+	else {
+		if (Rgt != NULL)
+			delete Rgt;
+	}
+
+	return true;
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//        NAME: operator=
+// DESCRIPTION: copy the Node.
+//   ARGUMENTS: const Node<T1, T2> & const b - the Node that is to be assigned
+// USES GLOBAL: none
+// MODIFIES GL: ID, Rcd, height, Lft, Rgt
+//     RETURNS: bool
+//      AUTHOR: Kingston Chan
+// AUTHOR/DATE: KC 2015-02-05
+//							KC 2015-02-05
+////////////////////////////////////////////////////////////////////////////////
+template<class T1, class T2 = NULLT>
+bool Node<T1, T2>::operator=(const Node<T1, T2> & const b) {
+	if (&b == this)
+		return true;
+	copy(&b);
 	return true;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 //        NAME: AddLft
 // DESCRIPTION: Concatenate a left son.
-//   ARGUMENTS: Node<T> *lft - the left son that is to be concatenated
+//   ARGUMENTS: Node<T1, T2> *lft - the left son that is to be concatenated
 // USES GLOBAL: none
 // MODIFIES GL: Lft, height
 //     RETURNS: bool
@@ -195,8 +251,13 @@ bool Node<T>::operator=(const T &cnt) {
 //							KC 2015-02-05
 ////////////////////////////////////////////////////////////////////////////////
 template<class T1, class T2 = NULLT>
-bool Node<T>::AddLft(Node<T> *lft) {
+bool Node<T1, T2>::AddLft(Node<T1, T2> *lft) {
 
+	if (Lft == lft)
+		return true;
+
+	if ((Lft != NULL) && (lft != NULL))
+		delete Lft;
 	Lft = lft; // assign the left son
 
 	// update the height
@@ -212,7 +273,7 @@ bool Node<T>::AddLft(Node<T> *lft) {
 ////////////////////////////////////////////////////////////////////////////////
 //        NAME: AddLft
 // DESCRIPTION: Concatenate a left son.
-//   ARGUMENTS: T lft - the content of the left son that is to be concatenated
+//   ARGUMENTS: T1 lft - the ID of the left son that is to be concatenated
 // USES GLOBAL: none
 // MODIFIES GL: Lft, height
 //     RETURNS: bool
@@ -221,12 +282,11 @@ bool Node<T>::AddLft(Node<T> *lft) {
 //							KC 2015-02-05
 ////////////////////////////////////////////////////////////////////////////////
 template<class T1, class T2 = NULLT>
-bool Node<T>::AddLft(T lft) {
+bool Node<T1, T2>::AddLft(T1 lft) {
 
 	Node *Tmp = new Node(lft);
-	Tmp->Lft = 0;
-	Tmp->Rgt = 0;
-	Tmp->height = 0;
+	if (Lft != NULL)
+		delete Lft;
 	Lft = Tmp;
 
 	// update the height
@@ -242,7 +302,7 @@ bool Node<T>::AddLft(T lft) {
 ////////////////////////////////////////////////////////////////////////////////
 //        NAME: AddRgt
 // DESCRIPTION: Concatenate a right son.
-//   ARGUMENTS: Node<T> *rgt - the right son that is to be concatenated
+//   ARGUMENTS: Node<T1, T2> *rgt - the right son that is to be concatenated
 // USES GLOBAL: none
 // MODIFIES GL: Rgt, height
 //     RETURNS: bool
@@ -251,8 +311,13 @@ bool Node<T>::AddLft(T lft) {
 //							KC 2015-02-05
 ////////////////////////////////////////////////////////////////////////////////
 template<class T1, class T2 = NULLT>
-bool Node<T>::AddRgt(Node<T> *rgt) {
+bool Node<T1, T2>::AddRgt(Node<T1, T2> *rgt) {
 
+	if (Rgt == rgt)
+		return true;
+
+	if ((Rgt != NULL) && (Rgt != NULL))
+		delete Rgt;
 	Rgt = rgt; // assign the left son
 
 	// update the height
@@ -268,7 +333,7 @@ bool Node<T>::AddRgt(Node<T> *rgt) {
 ////////////////////////////////////////////////////////////////////////////////
 //        NAME: AddRgt
 // DESCRIPTION: Concatenate a right son.
-//   ARGUMENTS: T rgt - the content of the right son that is to be concatenated
+//   ARGUMENTS: T1 rgt - the ID of the right son that is to be concatenated
 // USES GLOBAL: none
 // MODIFIES GL: Rgt, height
 //     RETURNS: bool
@@ -277,12 +342,11 @@ bool Node<T>::AddRgt(Node<T> *rgt) {
 //							KC 2015-02-05
 ////////////////////////////////////////////////////////////////////////////////
 template<class T1, class T2 = NULLT>
-bool Node<T1, T2>::AddRgt(T rgt) {
+bool Node<T1, T2>::AddRgt(T1 rgt) {
 
 	Node *Tmp = new Node(rgt);
-	Tmp->Lft = 0;
-	Tmp->Rgt = 0;
-	Tmp->height = 0;
+	if (Rgt != NULL)
+		delete Rgt;
 	Rgt = Tmp;
 
 	// update the height
