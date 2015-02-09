@@ -51,25 +51,26 @@ private:
 public:
 	// constructor and destructor
 	Node();
-	Node(T1 id);
+	Node(T1 id, const T2 * const rcd = NULL);
+	Node(T1 id, const T2 &rcd);
 	Node(const Node<T1, T2> &New);
 	~Node();
 
 	// modify the info of private members
 	bool ModifyID(const T1 &tmp);
-	bool operator=(const Node<T1, T2> & const b);
+	bool operator=(const Node<T1, T2> &b);
 	bool copy(const Node<T1, T2> * const b);
 	bool AddLft(Node<T1, T2> *lft);
 	bool AddRgt(Node<T1, T2> *rgt);
-	bool AddLft(T1 lftID);
-	bool AddRgt(T1 rgtID);
+	bool AddLft(T1 lftID, const T2 * const lftRcd = NULL);
+	bool AddRgt(T1 rgtID, const T2 * const RgtRcd = NULL);
 
 	// get the info of private members
 	Node<T1, T2> *getLft() { return Lft; }
 	Node<T1, T2> *getRgt() { return Rgt; }
 	int getHeight() const { return height; }
 	T1 getID() const { return ID; }
-	T2 getRcd() const { return Rcd; }
+	T2 *getRcd() const { return Rcd; }
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -83,7 +84,7 @@ public:
 // AUTHOR/DATE: KC 2015-02-05
 //							KC 2015-02-05
 ////////////////////////////////////////////////////////////////////////////////
-template<class T1, class T2 = NULLT>
+template<class T1, class T2>
 Node<T1, T2>::Node() {
 	height = 0;
 	Rcd = new T2;
@@ -94,6 +95,7 @@ Node<T1, T2>::Node() {
 //        NAME: Node
 // DESCRIPTION: Constructor of Node class.
 //   ARGUMENTS: T1 id - the ID of the node
+//				const T2 * const rcd - the initial record with default value NULL
 // USES GLOBAL: none
 // MODIFIES GL: ID, Rcd, height, Lft, Rgt
 //     RETURNS: none
@@ -101,10 +103,33 @@ Node<T1, T2>::Node() {
 // AUTHOR/DATE: KC 2015-02-05
 //							KC 2015-02-05
 ////////////////////////////////////////////////////////////////////////////////
-template<class T1, class T2 = NULLT>
-Node<T1, T2>::Node(T1 id) {
+template<class T1, class T2>
+Node<T1, T2>::Node(T1 id, const T2 * const rcd) {
 	ID = id;
 	Rcd = new T2;
+	if (rcd != NULL)
+		*Rcd = *rcd;
+	Lft = Rgt = NULL;	// no sons at first
+	height = 0;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//        NAME: Node
+// DESCRIPTION: Constructor of Node class.
+//   ARGUMENTS: T1 id - the ID of the node
+//				const T2 &rcd - the initial record
+// USES GLOBAL: none
+// MODIFIES GL: ID, Rcd, height, Lft, Rgt
+//     RETURNS: none
+//      AUTHOR: Kingston Chan
+// AUTHOR/DATE: KC 2015-02-09
+//							KC 2015-02-09
+////////////////////////////////////////////////////////////////////////////////
+template<class T1, class T2>
+Node<T1, T2>::Node(T1 id, const T2 &rcd) {
+	ID = id;
+	Rcd = new T2;
+	*Rcd = rcd;
 	Lft = Rgt = NULL;	// no sons at first
 	height = 0;
 }
@@ -120,7 +145,7 @@ Node<T1, T2>::Node(T1 id) {
 // AUTHOR/DATE: KC 2015-02-05
 //							KC 2015-02-05
 ////////////////////////////////////////////////////////////////////////////////
-template<class T1, class T2 = NULLT>
+template<class T1, class T2>
 Node<T1, T2>::Node(const Node<T1, T2> &New) {
 	copy(New);
 }
@@ -136,7 +161,7 @@ Node<T1, T2>::Node(const Node<T1, T2> &New) {
 // AUTHOR/DATE: KC 2015-02-05
 //							KC 2015-02-05
 ////////////////////////////////////////////////////////////////////////////////
-template<class T1, class T2 = NULLT>
+template<class T1, class T2>
 Node<T1, T2>::~Node() {
 	if (Rcd != NULL)
 		delete Rcd;
@@ -157,7 +182,7 @@ Node<T1, T2>::~Node() {
 // AUTHOR/DATE: KC 2015-02-05
 //							KC 2015-02-05
 ////////////////////////////////////////////////////////////////////////////////
-template<class T1, class T2 = NULLT>
+template<class T1, class T2>
 bool Node<T1, T2>::ModifyID(const T1 &tmp) {
 	ID = tmp;
 	return true;
@@ -171,10 +196,10 @@ bool Node<T1, T2>::ModifyID(const T1 &tmp) {
 // MODIFIES GL: ID, Rcd, Lft, Rgt, height
 //     RETURNS: bool
 //      AUTHOR: Kingston Chan
-// AUTHOR/DATE: KC 2015-02-05
-//							KC 2015-02-05
+// AUTHOR/DATE: KC 2015-02-08
+//							KC 2015-02-08
 ////////////////////////////////////////////////////////////////////////////////
-template<class T1, class T2 = NULLT>
+template<class T1, class T2>
 bool Node<T1, T2>::copy(const Node<T1, T2> * const b) {
 	
 	// avoid self copy after deletion
@@ -219,7 +244,6 @@ bool Node<T1, T2>::copy(const Node<T1, T2> * const b) {
 	return true;
 }
 
-
 ////////////////////////////////////////////////////////////////////////////////
 //        NAME: operator=
 // DESCRIPTION: copy the Node.
@@ -231,8 +255,8 @@ bool Node<T1, T2>::copy(const Node<T1, T2> * const b) {
 // AUTHOR/DATE: KC 2015-02-05
 //							KC 2015-02-05
 ////////////////////////////////////////////////////////////////////////////////
-template<class T1, class T2 = NULLT>
-bool Node<T1, T2>::operator=(const Node<T1, T2> & const b) {
+template<class T1, class T2>
+bool Node<T1, T2>::operator=(const Node<T1, T2> &b) {
 	if (&b == this)
 		return true;
 	copy(&b);
@@ -250,7 +274,7 @@ bool Node<T1, T2>::operator=(const Node<T1, T2> & const b) {
 // AUTHOR/DATE: KC 2015-02-05
 //							KC 2015-02-05
 ////////////////////////////////////////////////////////////////////////////////
-template<class T1, class T2 = NULLT>
+template<class T1, class T2>
 bool Node<T1, T2>::AddLft(Node<T1, T2> *lft) {
 
 	if (Lft == lft)
@@ -281,10 +305,10 @@ bool Node<T1, T2>::AddLft(Node<T1, T2> *lft) {
 // AUTHOR/DATE: KC 2015-02-05
 //							KC 2015-02-05
 ////////////////////////////////////////////////////////////////////////////////
-template<class T1, class T2 = NULLT>
-bool Node<T1, T2>::AddLft(T1 lft) {
+template<class T1, class T2>
+bool Node<T1, T2>::AddLft(T1 lftID, const T2 * const lftRcd) {
 
-	Node *Tmp = new Node(lft);
+	Node *Tmp = new Node(lftID, lftRcd);
 	if (Lft != NULL)
 		delete Lft;
 	Lft = Tmp;
@@ -310,7 +334,7 @@ bool Node<T1, T2>::AddLft(T1 lft) {
 // AUTHOR/DATE: KC 2015-02-05
 //							KC 2015-02-05
 ////////////////////////////////////////////////////////////////////////////////
-template<class T1, class T2 = NULLT>
+template<class T1, class T2>
 bool Node<T1, T2>::AddRgt(Node<T1, T2> *rgt) {
 
 	if (Rgt == rgt)
@@ -341,10 +365,10 @@ bool Node<T1, T2>::AddRgt(Node<T1, T2> *rgt) {
 // AUTHOR/DATE: KC 2015-02-05
 //							KC 2015-02-05
 ////////////////////////////////////////////////////////////////////////////////
-template<class T1, class T2 = NULLT>
-bool Node<T1, T2>::AddRgt(T1 rgt) {
+template<class T1, class T2>
+bool Node<T1, T2>::AddRgt(T1 rgtID, const T2 * const RgtRcd = NULL) {
 
-	Node *Tmp = new Node(rgt);
+	Node *Tmp = new Node(rgtID, RgtRcd);
 	if (Rgt != NULL)
 		delete Rgt;
 	Rgt = Tmp;
