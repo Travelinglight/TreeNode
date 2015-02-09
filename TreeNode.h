@@ -100,8 +100,8 @@ Node<T1, T2>::Node() {
 // MODIFIES GL: ID, Rcd, height, Lft, Rgt
 //     RETURNS: none
 //      AUTHOR: Kingston Chan
-// AUTHOR/DATE: KC 2015-02-05
-//							KC 2015-02-05
+// AUTHOR/DATE: KC 2015-02-09
+//							KC 2015-02-09
 ////////////////////////////////////////////////////////////////////////////////
 template<class T1, class T2>
 Node<T1, T2>::Node(T1 id, const T2 * const rcd) {
@@ -147,7 +147,7 @@ Node<T1, T2>::Node(T1 id, const T2 &rcd) {
 ////////////////////////////////////////////////////////////////////////////////
 template<class T1, class T2>
 Node<T1, T2>::Node(const Node<T1, T2> &New) {
-	copy(New);
+	copy(&New);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -247,13 +247,13 @@ bool Node<T1, T2>::copy(const Node<T1, T2> * const b) {
 ////////////////////////////////////////////////////////////////////////////////
 //        NAME: operator=
 // DESCRIPTION: copy the Node.
-//   ARGUMENTS: const Node<T1, T2> & const b - the Node that is to be assigned
+//   ARGUMENTS: const Node<T1, T2> &b - the Node that is to be assigned
 // USES GLOBAL: none
 // MODIFIES GL: ID, Rcd, height, Lft, Rgt
 //     RETURNS: bool
 //      AUTHOR: Kingston Chan
-// AUTHOR/DATE: KC 2015-02-05
-//							KC 2015-02-05
+// AUTHOR/DATE: KC 2015-02-09
+//							KC 2015-02-09
 ////////////////////////////////////////////////////////////////////////////////
 template<class T1, class T2>
 bool Node<T1, T2>::operator=(const Node<T1, T2> &b) {
@@ -297,7 +297,8 @@ bool Node<T1, T2>::AddLft(Node<T1, T2> *lft) {
 ////////////////////////////////////////////////////////////////////////////////
 //        NAME: AddLft
 // DESCRIPTION: Concatenate a left son.
-//   ARGUMENTS: T1 lft - the ID of the left son that is to be concatenated
+//   ARGUMENTS: T1 lftID - the ID of the left son that is to be concatenated
+//				const T2 * const lftRcd - the record of the left son
 // USES GLOBAL: none
 // MODIFIES GL: Lft, height
 //     RETURNS: bool
@@ -357,7 +358,8 @@ bool Node<T1, T2>::AddRgt(Node<T1, T2> *rgt) {
 ////////////////////////////////////////////////////////////////////////////////
 //        NAME: AddRgt
 // DESCRIPTION: Concatenate a right son.
-//   ARGUMENTS: T1 rgt - the ID of the right son that is to be concatenated
+//   ARGUMENTS: T1 rgtID - the ID of the right son that is to be concatenated
+//				const T2 * const RgtRcd - the record of the right son
 // USES GLOBAL: none
 // MODIFIES GL: Rgt, height
 //     RETURNS: bool
