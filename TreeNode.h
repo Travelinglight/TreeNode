@@ -58,6 +58,7 @@ public:
 
 	// modify the info of private members
 	bool ModifyID(const T1 &tmp);
+	bool ModifyHeight(int h);
 	bool operator=(const Node<T1, T2> &b);
 	bool copy(const Node<T1, T2> * const b);
 	bool AddLft(Node<T1, T2> *lft);
@@ -185,6 +186,23 @@ Node<T1, T2>::~Node() {
 template<class T1, class T2>
 bool Node<T1, T2>::ModifyID(const T1 &tmp) {
 	ID = tmp;
+	return true;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//        NAME: ModifyHeight
+// DESCRIPTION: To modify the height of a Node.
+//   ARGUMENTS: int h - the new height value
+// USES GLOBAL: none
+// MODIFIES GL: height
+//     RETURNS: bool
+//      AUTHOR: Kingston Chan
+// AUTHOR/DATE: KC 2015-02-09
+//							KC 2015-02-09
+////////////////////////////////////////////////////////////////////////////////
+template<class T1, class T2>
+bool Node<T1, T2>::ModifyHeight(int h) {
+	height = h;
 	return true;
 }
 

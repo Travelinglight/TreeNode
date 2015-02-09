@@ -56,6 +56,8 @@ int main() {
 
 		Node<int> Nd8(8);
 		Nd8.ModifyID(88);
+		Nd8.ModifyHeight(20);
+		cout << Nd8.getID() << ' ' << Nd8.getHeight() << endl;
 	}
 	system("pause");
 }
