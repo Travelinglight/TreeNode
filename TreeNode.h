@@ -233,8 +233,10 @@ bool Node<T1, T2>::copy(const Node<T1, T2> * const b) {
 		*Rcd = *(b->Rcd);
 	}
 	else {
-		if (Rcd != NULL)
+		if (Rcd != NULL) {
 			delete Rcd;
+			Rcd = NULL;
+		}
 	}
 	height = b->height;
 
@@ -245,8 +247,10 @@ bool Node<T1, T2>::copy(const Node<T1, T2> * const b) {
 		Lft->copy(b->Lft);
 	}
 	else {
-		if (Lft != NULL)
+		if (Lft != NULL) {
 			delete Lft;
+			Lft = NULL;
+		}
 	}
 
 	// copy the right son
@@ -256,8 +260,10 @@ bool Node<T1, T2>::copy(const Node<T1, T2> * const b) {
 		Rgt->copy(b->Rgt);
 	}
 	else {
-		if (Rgt != NULL)
+		if (Rgt != NULL) {
 			delete Rgt;
+			Rgt = NULL;
+		}
 	}
 
 	return true;
@@ -377,7 +383,7 @@ bool Node<T1, T2>::AddRgt(Node<T1, T2> *rgt) {
 	if (Rgt == rgt)
 		return true;
 
-	if ((Rgt != NULL) && (Rgt != NULL))
+	if ((Rgt != NULL) && (rgt != NULL))
 		delete Rgt;
 	Rgt = rgt; // assign the left son
 
