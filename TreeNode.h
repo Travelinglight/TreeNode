@@ -51,8 +51,8 @@ private:
 public:
 	// constructor and destructor
 	Node();
-	Node(T1 id, const T2 * const rcd = NULL);
-	Node(T1 id, const T2 &rcd);
+	Node(const T1 &id, const T2 * const rcd = NULL);
+	Node(const T1 &id, const T2 &rcd);
 	Node(const Node<T1, T2> &New);
 	~Node();
 
@@ -64,8 +64,8 @@ public:
 	bool copy(const Node<T1, T2> * const b);
 	bool AddLft(Node<T1, T2> *lft);
 	bool AddRgt(Node<T1, T2> *rgt);
-	bool AddLft(T1 lftID, const T2 * const lftRcd = NULL);
-	bool AddRgt(T1 rgtID, const T2 * const RgtRcd = NULL);
+	bool AddLft(const T1 &lftID, const T2 * const lftRcd = NULL);
+	bool AddRgt(const T1 &rgtID, const T2 * const RgtRcd = NULL);
 
 	// get the info of private members
 	Node<T1, T2> *getLft() { return Lft; }
@@ -96,7 +96,7 @@ Node<T1, T2>::Node() {
 ////////////////////////////////////////////////////////////////////////////////
 //        NAME: Node
 // DESCRIPTION: Constructor of Node class.
-//   ARGUMENTS: T1 id - the ID of the node
+//   ARGUMENTS: const T1 &id - the ID of the node
 //				const T2 * const rcd - the initial record with default value NULL
 // USES GLOBAL: none
 // MODIFIES GL: ID, Rcd, height, Lft, Rgt
@@ -106,7 +106,7 @@ Node<T1, T2>::Node() {
 //							KC 2015-02-09
 ////////////////////////////////////////////////////////////////////////////////
 template<class T1, class T2>
-Node<T1, T2>::Node(T1 id, const T2 * const rcd) {
+Node<T1, T2>::Node(const T1 &id, const T2 * const rcd) {
 	ID = id;
 	Rcd = new T2;
 	if (rcd != NULL)
@@ -118,7 +118,7 @@ Node<T1, T2>::Node(T1 id, const T2 * const rcd) {
 ////////////////////////////////////////////////////////////////////////////////
 //        NAME: Node
 // DESCRIPTION: Constructor of Node class.
-//   ARGUMENTS: T1 id - the ID of the node
+//   ARGUMENTS: const T1 &id - the ID of the node
 //				const T2 &rcd - the initial record
 // USES GLOBAL: none
 // MODIFIES GL: ID, Rcd, height, Lft, Rgt
@@ -128,7 +128,7 @@ Node<T1, T2>::Node(T1 id, const T2 * const rcd) {
 //							KC 2015-02-09
 ////////////////////////////////////////////////////////////////////////////////
 template<class T1, class T2>
-Node<T1, T2>::Node(T1 id, const T2 &rcd) {
+Node<T1, T2>::Node(const T1 &id, const T2 &rcd) {
 	ID = id;
 	Rcd = new T2;
 	*Rcd = rcd;
@@ -333,7 +333,7 @@ bool Node<T1, T2>::AddLft(Node<T1, T2> *lft) {
 ////////////////////////////////////////////////////////////////////////////////
 //        NAME: AddLft
 // DESCRIPTION: Concatenate a left son.
-//   ARGUMENTS: T1 lftID - the ID of the left son that is to be concatenated
+//   ARGUMENTS: const T1 &lftID - the ID of the left son that is to be concatenated
 //				const T2 * const lftRcd - the record of the left son
 // USES GLOBAL: none
 // MODIFIES GL: Lft, height
@@ -343,7 +343,7 @@ bool Node<T1, T2>::AddLft(Node<T1, T2> *lft) {
 //							KC 2015-02-05
 ////////////////////////////////////////////////////////////////////////////////
 template<class T1, class T2>
-bool Node<T1, T2>::AddLft(T1 lftID, const T2 * const lftRcd) {
+bool Node<T1, T2>::AddLft(const T1 &lftID, const T2 * const lftRcd) {
 
 	Node *Tmp = new Node(lftID, lftRcd);
 	if (Lft != NULL)
@@ -394,7 +394,7 @@ bool Node<T1, T2>::AddRgt(Node<T1, T2> *rgt) {
 ////////////////////////////////////////////////////////////////////////////////
 //        NAME: AddRgt
 // DESCRIPTION: Concatenate a right son.
-//   ARGUMENTS: T1 rgtID - the ID of the right son that is to be concatenated
+//   ARGUMENTS: const T1 &rgtID - the ID of the right son that is to be concatenated
 //				const T2 * const RgtRcd - the record of the right son
 // USES GLOBAL: none
 // MODIFIES GL: Rgt, height
@@ -404,7 +404,7 @@ bool Node<T1, T2>::AddRgt(Node<T1, T2> *rgt) {
 //							KC 2015-02-05
 ////////////////////////////////////////////////////////////////////////////////
 template<class T1, class T2>
-bool Node<T1, T2>::AddRgt(T1 rgtID, const T2 * const RgtRcd = NULL) {
+bool Node<T1, T2>::AddRgt(const T1 &rgtID, const T2 * const RgtRcd = NULL) {
 
 	Node *Tmp = new Node(rgtID, RgtRcd);
 	if (Rgt != NULL)
