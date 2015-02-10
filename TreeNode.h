@@ -60,6 +60,7 @@ public:
 	bool ModifyID(const T1 &tmp);
 	bool ModifyHeight(int h);
 	bool operator=(const Node<T1, T2> &b);
+	bool operator=(const T1 &id);
 	bool copy(const Node<T1, T2> * const b);
 	bool AddLft(Node<T1, T2> *lft);
 	bool AddRgt(Node<T1, T2> *rgt);
@@ -137,7 +138,7 @@ Node<T1, T2>::Node(T1 id, const T2 &rcd) {
 
 ////////////////////////////////////////////////////////////////////////////////
 //        NAME: Node
-// DESCRIPTION: Copy constructor of Node class, copy the content only.
+// DESCRIPTION: Copy constructor of Node class.
 //   ARGUMENTS: const Node<T1, T2> &New - the Node that is to be copied
 // USES GLOBAL: none
 // MODIFIES GL: ID, Rcd, height, Lft, Rgt
@@ -278,6 +279,23 @@ bool Node<T1, T2>::operator=(const Node<T1, T2> &b) {
 	if (&b == this)
 		return true;
 	copy(&b);
+	return true;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//        NAME: operator=
+// DESCRIPTION: Assign the ID of a Node.
+//   ARGUMENTS: const T1 &id - the id that is to be assigned
+// USES GLOBAL: none
+// MODIFIES GL: ID
+//     RETURNS: bool
+//      AUTHOR: Kingston Chan
+// AUTHOR/DATE: KC 2015-02-10
+//							KC 2015-02-10
+////////////////////////////////////////////////////////////////////////////////
+template<class T1, class T2>
+bool Node<T1, T2>::operator=(const T1 &id) {
+	ID = id;
 	return true;
 }
 

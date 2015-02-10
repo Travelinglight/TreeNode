@@ -53,6 +53,8 @@ int main() {
 		cout << Nd7.getID() << endl;
 		Nd7.ModifyID("hahaha");
 		cout << Nd7.getID() << endl;
+		Nd7 = "hahahaha";
+		cout << Nd7.getID() << endl;
 
 		Node<int> Nd8(8);
 		Nd8.ModifyID(88);
