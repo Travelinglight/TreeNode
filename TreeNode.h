@@ -68,8 +68,8 @@ public:
 	bool AddRgt(const T1 &rgtID, const T2 * const RgtRcd = NULL);
 
 	// get the info of private members
-	Node<T1, T2> *getLft() { return Lft; }
-	Node<T1, T2> *getRgt() { return Rgt; }
+	Node<T1, T2> *getLft() const { return Lft; }
+	Node<T1, T2> *getRgt() const { return Rgt; }
 	int getHeight() const { return height; }
 	T1 getID() const { return ID; }
 	T2 *getRcd() const { return Rcd; }
