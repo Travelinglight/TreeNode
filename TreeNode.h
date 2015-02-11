@@ -285,9 +285,9 @@ template<class T1, class T2>
 bool Node<T1, T2>::operator=(const Node<T1, T2> &b) {
 	if (&b == this)
 		return true;
-	ID = b->getID();
-	*Rcd = *(b->getRcd());
-	height = b->getHeight();
+	ID = b.getID();
+	*Rcd = *(b.getRcd());
+	height = b.getHeight();
 	return true;
 }
 

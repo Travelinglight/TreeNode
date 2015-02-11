@@ -43,7 +43,7 @@ int main() {
 		
 		Node<A, B> Nd5(Nd1);
 		Nd5.print();
-		// Nd5 = Nd1;
+		//Nd5 = Nd1;
 		cout << Nd5.getID().x << ' ' << Nd5.getRcd()->y << ' ' << Nd5.getHeight() << endl;
 		cout << Nd1.getID().x << ' ' << Nd1.getRcd()->y << ' ' << Nd1.getHeight() << endl;
 		Node<A, B> *Modify = Nd5.getLft();
