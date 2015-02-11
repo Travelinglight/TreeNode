@@ -73,6 +73,7 @@ public:
 	int getHeight() const { return height; }
 	T1 getID() const { return ID; }
 	T2 *getRcd() const { return Rcd; }
+	void print() const;
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -411,6 +412,36 @@ bool Node<T1, T2>::AddRgt(const T1 &rgtID, const T2 * const RgtRcd = NULL) {
 		height = MAX(height, Rgt->height + 1);
 
 	return true;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//        NAME: print
+// DESCRIPTION: To print the Node's ID, height and two sons.
+//   ARGUMENTS: none
+// USES GLOBAL: none
+// MODIFIES GL: none
+//     RETURNS: void
+//      AUTHOR: Kingston Chan
+// AUTHOR/DATE: KC 2015-02-11
+//							KC 2015-02-11
+////////////////////////////////////////////////////////////////////////////////
+template<class T1, class T2>
+void Node<T1, T2>::print() const{
+	cout << ID << ": h-" << height << "  l-";
+	if (Lft != NULL)
+		cout << Lft->getID();
+	else
+		cout << 0;
+	cout << "  r-";
+	if (Rgt != NULL)
+		cout << Rgt->getID();
+	else
+		cout << 0;
+	cout << endl;
+	if (Lft != NULL)
+		Lft->print();
+	if (Rgt != NULL)
+		Rgt->print();
 }
 
 #endif
