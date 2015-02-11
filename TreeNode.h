@@ -319,11 +319,6 @@ bool Node<T1, T2>::operator=(const T1 &id) {
 template<class T1, class T2>
 bool Node<T1, T2>::AddLft(Node<T1, T2> *lft) {
 
-	if (Lft == lft)
-		return true;
-
-	if ((Lft != NULL) && (lft != NULL))
-		delete Lft;
 	Lft = lft; // assign the left son
 
 	// update the height
@@ -352,8 +347,6 @@ template<class T1, class T2>
 bool Node<T1, T2>::AddLft(const T1 &lftID, const T2 * const lftRcd) {
 
 	Node *Tmp = new Node(lftID, lftRcd);
-	if (Lft != NULL)
-		delete Lft;
 	Lft = Tmp;
 
 	// update the height
@@ -380,11 +373,6 @@ bool Node<T1, T2>::AddLft(const T1 &lftID, const T2 * const lftRcd) {
 template<class T1, class T2>
 bool Node<T1, T2>::AddRgt(Node<T1, T2> *rgt) {
 
-	if (Rgt == rgt)
-		return true;
-
-	if ((Rgt != NULL) && (rgt != NULL))
-		delete Rgt;
 	Rgt = rgt; // assign the left son
 
 	// update the height
@@ -413,8 +401,6 @@ template<class T1, class T2>
 bool Node<T1, T2>::AddRgt(const T1 &rgtID, const T2 * const RgtRcd = NULL) {
 
 	Node *Tmp = new Node(rgtID, RgtRcd);
-	if (Rgt != NULL)
-		delete Rgt;
 	Rgt = Tmp;
 
 	// update the height
