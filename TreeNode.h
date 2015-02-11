@@ -272,10 +272,10 @@ bool Node<T1, T2>::copy(const Node<T1, T2> * const b) {
 
 ////////////////////////////////////////////////////////////////////////////////
 //        NAME: operator=
-// DESCRIPTION: copy the Node.
+// DESCRIPTION: copy the content of a Node.
 //   ARGUMENTS: const Node<T1, T2> &b - the Node that is to be assigned
 // USES GLOBAL: none
-// MODIFIES GL: ID, Rcd, height, Lft, Rgt
+// MODIFIES GL: ID, Rcd, height
 //     RETURNS: bool
 //      AUTHOR: Kingston Chan
 // AUTHOR/DATE: KC 2015-02-09
@@ -285,7 +285,9 @@ template<class T1, class T2>
 bool Node<T1, T2>::operator=(const Node<T1, T2> &b) {
 	if (&b == this)
 		return true;
-	copy(&b);
+	ID = b->getID();
+	*Rcd = *(b->getRcd());
+	height = b->getHeight();
 	return true;
 }
 
@@ -429,14 +431,10 @@ template<class T1, class T2>
 void Node<T1, T2>::print() const{
 	cout << ID << ": h-" << height << "  l-";
 	if (Lft != NULL)
-		cout << Lft->getID();
-	else
-		cout << 0;
+		cout << '(' << Lft->getID() << ')';
 	cout << "  r-";
 	if (Rgt != NULL)
-		cout << Rgt->getID();
-	else
-		cout << 0;
+		cout << '(' << Rgt->getID() << ')';
 	cout << endl;
 	if (Lft != NULL)
 		Lft->print();
