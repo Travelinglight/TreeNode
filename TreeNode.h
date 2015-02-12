@@ -1,5 +1,5 @@
 /*
-base64.cpp and base64.h
+TreeNode.h
 
 Copyright (C) 2015-2019 Kingston Chan
 
@@ -71,7 +71,7 @@ public:
 	Node<T1, T2> *getLft() const { return Lft; }
 	Node<T1, T2> *getRgt() const { return Rgt; }
 	int getHeight() const { return height; }
-	T1 getID() const { return ID; }
+	const T1 &getID() const { return ID; }
 	T2 *getRcd() const { return Rcd; }
 	void print() const;
 };
