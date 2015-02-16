@@ -36,3 +36,7 @@ User Interface
 - **const T1 &getID()** &#160;To get the ID of the Node, without allowing modification;
 - **T2 \*getRcd()** &#160;To get the pointer to the record of the Node, allowing modification; 
 - **void print()** &#160;To print the Node. This function can be used only if the print functions has been defined for T1 class;
+
+Notice
+----------------
+- if you want to add a NULL children, you should use tpye cast like (Node<T1, T1>*)NULL;
