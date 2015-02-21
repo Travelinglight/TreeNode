@@ -47,7 +47,7 @@ int main() {
 		cout << Nd5.getID().x << ' ' << Nd5.getRcd()->y << ' ' << Nd5.getHeight() << endl;
 		cout << Nd1.getID().x << ' ' << Nd1.getRcd()->y << ' ' << Nd1.getHeight() << endl;
 		Node<A, B> *Modify = Nd5.getLft();
-		Modify->ModifyID(i);
+		Modify->setID(i);
 		cout << Nd5.getLft()->getID().x << endl;
 		Modify->getRcd()->y++;
 		cout << Nd1.getLft()->getRcd()->y << endl;
@@ -58,14 +58,14 @@ int main() {
 
 		Node<string> Nd7("haha");
 		cout << Nd7.getID() << endl;
-		Nd7.ModifyID("hahaha");
+		Nd7.setID("hahaha");
 		cout << Nd7.getID() << endl;
 		Nd7 = "hahahaha";
 		cout << Nd7.getID() << endl;
 
 		Node<int> Nd8(8);
-		Nd8.ModifyID(88);
-		Nd8.ModifyHeight(20);
+		Nd8.setID(88);
+		Nd8.setHeight(20);
 		cout << Nd8.getID() << ' ' << Nd8.getHeight() << endl;
 	}
 	system("pause");

@@ -21,8 +21,8 @@ User Interface
 - **Node(const T1 &id, const T2 &rcd)** &#160;The constructor of the Node with the ID and the record;
 - **Node(const Node<T1, T2> &New)** &#160;The copy constructor of the Node;
 - **~Node()** &#160;The destructor of the Node class;
-- **bool ModifyID(const T1 &tmp)** &#160;To modify the ID of a Node;
-- **bool ModifyHeight(int h)** &#160;To modify the height of a Node;
+- **bool setID(const T1 &tmp)** &#160;To modify the ID of a Node;
+- **bool setHeight(int h)** &#160;To modify the height of a Node;
 - **bool operator=(const Node<T1, T2> &b)** &#160;To copy the Node ID and Record of another node, but remain the sons;
 - **bool operator=(const T1 &id)** &#160;To assign the ID of a Node;
 - **bool copy(const Node<T1, T2> \* const b)** &#160;To copy the Node including its sons;
