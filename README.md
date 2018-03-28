@@ -1,6 +1,8 @@
 TreeNode(C++)
 ================
-This is a template class in c++. It is used for tree-like data structure, such as AVL tree, Splay tree, etc. 
+
+This is a template class implemented in c++. It is used for tree-like data structure, such as AVL tree, Splay tree, etc. 
+
 Template
 ----------------
 - **T1** &#160;the ID to identify a node;
@@ -21,22 +23,22 @@ User Interface
 - **Node(const T1 &id, const T2 &rcd)** &#160;The constructor of the Node with the ID and the record;
 - **Node(const Node<T1, T2> &New)** &#160;The copy constructor of the Node;
 - **~Node()** &#160;The destructor of the Node class;
-- **bool setID(const T1 &tmp)** &#160;To modify the ID of a Node;
-- **bool setHeight(int h)** &#160;To modify the height of a Node;
-- **bool operator=(const Node<T1, T2> &b)** &#160;To copy the Node ID and Record of another node, but remain the sons;
-- **bool operator=(const T1 &id)** &#160;To assign the ID of a Node;
-- **bool copy(const Node<T1, T2> \* const b)** &#160;To copy the Node including its sons;
-- **bool AddLft(Node<T1, T2> \*lft)** &#160;To assign the Node with a left son Node, but not delete the original left son. The height is updated automatically;
-- **bool AddRgt(Node<T1, T2> \*rgt)** &#160;To assign the Node with a right son Node, but not delete the original right son;The height is updated automatically;
-- **bool AddLft(const T1 &lftID, const T2 \* const lftRcd = NULL)** &#160;To create and add a left son to the current Node, without deleting the original left son;The height is updated automatically;
-- **bool AddRgt(const T1 &rgtID, const T2 \* const RgtRcd = NULL)** &#160;To create and add a right son to the current Node, without deleting the original right son;The height is updated automatically;
-- **Node<T1, T2> \*getLft()** &#160;To get the pointer to the left son;
-- **Node<T1, T2> \*getRgt()** &#160;To get the pointer to the right son;
-- **int getHeight()** &#160;To get the height of the Node;
-- **const T1 &getID()** &#160;To get the ID of the Node, without allowing modification;
-- **T2 \*getRcd()** &#160;To get the pointer to the record of the Node, allowing modification; 
-- **void print()** &#160;To print the Node. This function can be used only if the print functions has been defined for T1 class;
+- **bool setID(const T1 &tmp)** &#160;Modify the ID of a Node;
+- **bool setHeight(int h)** &#160;<odify the height of a Node;
+- **bool operator=(const Node<T1, T2> &b)** &#160;Copy the Node ID and Record of another node, but remain the children;
+- **bool operator=(const T1 &id)** &#160;Assign the ID to a Node;
+- **bool copy(const Node<T1, T2> \* const b)** &#160;Copy the Node including its children;
+- **bool AddLft(Node<T1, T2> \*lft)** &#160;Assign the Node with a left child Node rather than delete the original left child. The height is updated automatically;
+- **bool AddRgt(Node<T1, T2> \*rgt)** &#160;Assign the Node with a right child Node rather than delete the original right child. The height is updated automatically;
+- **bool AddLft(const T1 &lftID, const T2 \* const lftRcd = NULL)** &#160;Create and add a left child to the current Node, without deleting the original left child. The height is updated automatically;
+- **bool AddRgt(const T1 &rgtID, const T2 \* const RgtRcd = NULL)** &#160;Create and add a right child to the current Node, without deleting the original right child. The height is updated automatically;
+- **Node<T1, T2> \*getLft()** &#160;Get the pointer to the left child;
+- **Node<T1, T2> \*getRgt()** &#160;Get the pointer to the right child;
+- **int getHeight()** &#160;Get the height of the Node;
+- **const T1 &getID()** &#160;Get the ID of the Node, without allowing modification;
+- **T2 \*getRcd()** &#160;Get the pointer to the record of the Node, allowing modification; 
+- **void print()** &#160;Print the Node. This function can be used only if the print functions has been defined for T1 class;
 
 Notice
 ----------------
-- if you want to add a NULL children, you should use tpye cast like (Node<T1, T1>*)NULL;
+- if you want to add a NULL child, you should use tpye cast like (Node<T1, T1>*)NULL;
